@@ -1,12 +1,20 @@
-import { Link } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
 
-function UserCard({user}) {
-    return (
-      <article>
-          <h2>{user.name}</h2>
-          <Link to={`/profile/${user.id}`}>View profile</Link>
-      </article>
-    );
-  };
-  
-  export default UserCard;
+function UserProfile() {
+  const params = useParams();
+  const users = useOutletContext();
+
+  const user = users.find(user => user.id === parseInt(params.id));
+
+  if (!user){
+    return <h1>Loading...</h1>
+  }
+
+  return(
+      <aside>
+        <h1>{user.name}</h1>
+      </aside>
+  );
+};
+
+export default UserProfile;
